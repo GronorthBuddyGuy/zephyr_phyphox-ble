@@ -1,15 +1,15 @@
 # Copyright 2022, Victor Chavez
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-menuconfig Phyphox_BLE
-    bool "PHYPHOX_BLE"
+config PHYPHOX_BLE
+    bool "Phyphox BLE"
     default n
     help
-        Enables the QPCPP Module
-
+        Enables the Phyphox BLE Module
+        
 if PHYPHOX_BLE
 
 module = PHYPHOX_BLE
-module-str = PHYPHOX_BLE
+module-str = phyphox_ble
 
 endif

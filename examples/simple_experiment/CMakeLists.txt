@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.20.0)
 
 # Path were experiment is located
-set(PHYPHOX_EXP_IN  ${CMAKE_CURRENT_SOURCE_DIR}/experiment.phyphox CACHE STRING INTERNAL)
+set(PHYPHOX_EXP  ${CMAKE_CURRENT_SOURCE_DIR}/experiment.phyphox CACHE STRING INTERNAL)
 set(PHYPHOX_BLE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../..)
 
 # Add the pyphoxble repo as a module for its use with zephyr

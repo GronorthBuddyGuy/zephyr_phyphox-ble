@@ -1,10 +1,10 @@
 # Copyright 2022, Victor Chavez
 # SPDX-License-Identifier: GPL-3.0-or-later
-
+if(CONFIG_PHYPHOX_BLE)
 set(lib_name phyphox_ble)
 
-if(NOT DEFINED PHYPHOX_EXP_IN)
-  message( SEND_ERROR "Phyphox experiment (.phyphox) path must be defined as PHYPHOX_EXP_IN" )
+if(NOT DEFINED PHYPHOX_EXP)
+  message( SEND_ERROR "Phyphox experiment (.phyphox) path must be defined as PHYPHOX_EXP" )
 endif()
 
 
@@ -18,10 +18,10 @@ if(NOT Python3_FOUND)
 	message( SEND_ERROR "Could not find Python 3.x" )
 endif()
 add_custom_command( OUTPUT ${PHYPHOX_EXP_OUT}/phyphox_autogen.cpp
-							${PHYPHOX_EXP_OUT}/phyphox_autogen.hpp
+							              ${PHYPHOX_EXP_OUT}/phyphox_autogen.hpp
                     PRE_BUILD
-                    COMMAND ${Python3_EXECUTABLE} ${PHYPHOX_SCRIPT} ${PHYPHOX_EXP_IN} ${PHYPHOX_EXP_OUT}
-                    DEPENDS ${PHYPHOX_EXP_IN}
+                    COMMAND ${Python3_EXECUTABLE} ${PHYPHOX_SCRIPT} ${PHYPHOX_EXP} ${PHYPHOX_EXP_OUT}
+                    DEPENDS ${PHYPHOX_EXP}
                             ${PHYPHOX_SCRIPT}
                   )
 
@@ -35,3 +35,4 @@ zephyr_include_directories(include
                             ${PHYPHOX_EXP_OUT})
 
 target_compile_options(${lib_name} PRIVATE -Wall -Wextra -Wfatal-errors)
+endif() # CONFIG_PHYPHOX_BLE
