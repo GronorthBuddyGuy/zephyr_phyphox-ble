@@ -6,3 +6,4 @@
 *.bin
 *phyphox_autogen.cpp
 *phyphox_autogen.hpp
+.vscode

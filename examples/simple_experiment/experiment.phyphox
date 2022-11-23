@@ -1,0 +1,36 @@
+<phyphox xmlns="http://phyphox.org/xml" xmlns:editor="http://phyphox.org/editor/xml" version="1.7" editor:version="1.0" locale="en">
+    <title>Simple Experiment</title>
+    <category>Zephyr</category>
+    <description>Simple Experiment to demonstrate how to integrate the zephyr phyphox ble library. Copyright 2022, Victor Chavez
+SPDX-License-Identifier: GPL-3.0-or-later</description>
+    <data-containers>
+        <container size="1000" static="false">buff1</container>
+        <container size="1000" static="false">buff2</container>
+    </data-containers>
+    <input>
+        <bluetooth editor:uuid="97" editor:posx="149.66668701171875" editor:posy="209.36668395996094" id="zephyr_ble" name="Zephyr Phyphox Demo"  mode="notification" rate="1" subscribeOnStart="false">
+            <output char="12340002-0000-0000-0000-1234567859AB" conversion="uInt32LittleEndian" offset="0" label="uptime">buff1</output>
+            <output char="12340003-0000-0000-0000-1234567859AB" conversion="uInt32LittleEndian" offset="0" label="simple_val">buff2</output>
+        </bluetooth>
+    </input>
+    <output>
+    </output>
+    <analysis sleep="0"  onUserInput="false">
+    </analysis>
+    <views>
+        <view label="Demo View">
+            <value editor:uuid="104" editor:posx="593.816650390625" editor:posy="268.18333435058594" label="Zephyr Uptime" size="1" precision="0" scientific="false"  factor="1" >
+                <input>buff1</input>
+            </value>
+            <value editor:uuid="111" editor:posx="587.7000122070312" editor:posy="392.6666717529297" label="Simple value" size="1" precision="0" scientific="false"  factor="1" >
+                <input>buff2</input>
+            </value>
+        </view>
+    </views>
+    <export>
+        <set name="zephyr_export">
+            <data name="uptime">buff1</data>
+            <data name="simple_val">buff2</data>
+        </set>
+    </export>
+</phyphox>

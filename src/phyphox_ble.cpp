@@ -23,7 +23,7 @@
 namespace phyphox_ble
 {
 
-static constexpr uint8_t MAX_PACKET_EXP_XML{50U};
+static constexpr uint8_t MAX_PACKET_EXP_XML{100U};
 static uint16_t exp_xml_data_count{0U};
 static uint16_t exp_xml_next_idx{0U};
 static bool header_sent{false};
@@ -145,8 +145,6 @@ namespace experiment
     }
 }
 
-
-
 static void exp_xml_notify(const struct bt_gatt_attr *attr, uint16_t value)
 {
     const bool notify_enabled = value == BT_GATT_CCC_NOTIFY;
@@ -158,7 +156,6 @@ static void exp_xml_notify(const struct bt_gatt_attr *attr, uint16_t value)
         send_exp_xml();
     }
 }
-
 
 static ssize_t eventwrite_cb(struct bt_conn *conn,
 				const struct bt_gatt_attr *attr,
@@ -186,11 +183,12 @@ static ssize_t eventwrite_cb(struct bt_conn *conn,
                                 pBufRaw[offset::unixtime+1] << 8  | 
                                 pBufRaw[offset::unixtime] << 16; 
 
-    const experiment::Event_t event_data = {.evt_type = static_cast<experiment::EventTypes>(pBufRaw[0]),
-                         .exp_time_ms = exp_time_ms,
-                         .unix_time_ms = unixtime_ms
-                        };
-    
+    const experiment::Event_t event_data =
+    {
+        .evt_type = static_cast<experiment::EventTypes>(pBufRaw[0]),
+        .exp_time_ms = exp_time_ms,
+        .unix_time_ms = unixtime_ms
+    };
     
     if(experiment::event::user_cb != nullptr)
     {
@@ -221,19 +219,17 @@ BT_GATT_SERVICE_DEFINE(phy_phox_svc,
 );
 
 
-static bt_gatt_notify_params exp_notify_params =
-{
-    .uuid = nullptr,
-    .attr = &phy_phox_svc.attrs[exp_xml_char_idx],
-    .data = nullptr,
-    .len = 0,
-    .func = exp_xml_notify_sent_cb,
-    .user_data = nullptr
-};
-
 static void send_exp_xml()
 {
-
+    bt_gatt_notify_params exp_notify_params =
+    {
+        .uuid = nullptr,
+        .attr = &phy_phox_svc.attrs[exp_xml_char_idx],
+        .data = nullptr,
+        .len = 0,
+        .func = exp_xml_notify_sent_cb,
+        .user_data = nullptr
+    };
     bool finished_upload{false};
     /* First packet must be phyphox header*/
     if(header_sent == false)
@@ -257,7 +253,7 @@ static void send_exp_xml()
         exp_xml_next_idx += send_len;
     }
     const int gatt_res = bt_gatt_notify_cb(nullptr,&exp_notify_params);
-    __ASSERT(gatt_res==0,"Could not start notification of experiment");
+    __ASSERT(gatt_res==0,"Could not start notification of experiment, check MTU Size");
     if(finished_upload)
     {
         if(experiment::load::user_cb != nullptr)

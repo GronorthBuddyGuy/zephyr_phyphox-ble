@@ -1,15 +1,15 @@
-set(lib_name phyphox_ble)
-zephyr_library_named(${lib_name})
+# Copyright 2022, Victor Chavez
+# SPDX-License-Identifier: GPL-3.0-or-later
 
+set(lib_name phyphox_ble)
 
 if(NOT DEFINED PHYPHOX_EXP_IN)
   message( SEND_ERROR "Phyphox experiment (.phyphox) path must be defined as PHYPHOX_EXP_IN" )
 endif()
 
-if(NOT DEFINED PHYPHOX_EXP_OUT)
-  message( SEND_ERROR "Phyphox experiment out path must be defined as PHYPHOX_EXP_OUT" )
-endif()
 
+zephyr_library_named(${lib_name})
+set(PHYPHOX_EXP_OUT ${CMAKE_CURRENT_BINARY_DIR})
 
 set(PHYPHOX_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/scripts/phyphox_xml.py)
 # Generate Phyphox experiment data from xml
