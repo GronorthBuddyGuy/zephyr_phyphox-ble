@@ -4,12 +4,12 @@
     <description>Simple Experiment to demonstrate how to integrate the zephyr phyphox ble library. Copyright 2022, Victor Chavez
 SPDX-License-Identifier: GPL-3.0-or-later</description>
     <data-containers>
-        <container size="1000" static="false">buff1</container>
         <container size="1000" static="false">buff2</container>
+        <container size="1000" static="false">output</container>
     </data-containers>
     <input>
-        <bluetooth editor:uuid="97" editor:posx="149.66668701171875" editor:posy="209.36668395996094" id="zephyr_ble" name="Zephyr Phyphox Demo"  mode="notification" rate="1" subscribeOnStart="false">
-            <output char="12340002-0000-0000-0000-1234567859AB" conversion="uInt32LittleEndian" offset="0" label="uptime">buff1</output>
+        <bluetooth editor:uuid="122" editor:posx="100" editor:posy="250" id="zephyr_ble" name="Zephyr Phyphox Demo"  mode="notification" rate="1" subscribeOnStart="false">
+            <output char="12340002-0000-0000-0000-1234567859AB" conversion="float32LittleEndian" offset="0" label="uptime">output</output>
             <output char="12340003-0000-0000-0000-1234567859AB" conversion="uInt32LittleEndian" offset="0" label="simple_val">buff2</output>
         </bluetooth>
     </input>
@@ -19,17 +19,21 @@ SPDX-License-Identifier: GPL-3.0-or-later</description>
     </analysis>
     <views>
         <view label="Demo View">
-            <value editor:uuid="104" editor:posx="593.816650390625" editor:posy="268.18333435058594" label="Zephyr Uptime" size="1" precision="0" scientific="false"  factor="1" >
-                <input>buff1</input>
+            <value editor:uuid="176" editor:posx="717.7000122070312" editor:posy="215.7166748046875" label="Zephyr Uptime" size="1" precision="3" scientific="false" unit="s" factor="1" >
+                <input>output</input>
             </value>
-            <value editor:uuid="111" editor:posx="587.7000122070312" editor:posy="392.6666717529297" label="Simple value" size="1" precision="0" scientific="false"  factor="1" >
+            <separator editor:uuid="204" height="0.1" color="404040">
+            </separator>
+            <value editor:uuid="177" editor:posx="587.7000122070312" editor:posy="392.6666717529297" label="Simple value" size="1" precision="0" scientific="false"  factor="1" >
                 <input>buff2</input>
             </value>
+            <graph editor:uuid="191" editor:posx="586.0166625976562" editor:posy="485.6666717529297" label="Simple Value Graph" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" history="1" labelX="" labelY="" labelZ="" unitX="" unitY="" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0"  mapWidth="0"       >
+                <input axis="y">buff2</input>
+            </graph>
         </view>
     </views>
     <export>
         <set name="zephyr_export">
-            <data name="uptime">buff1</data>
             <data name="simple_val">buff2</data>
         </set>
     </export>

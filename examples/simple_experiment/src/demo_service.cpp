@@ -15,7 +15,7 @@
 
 namespace demo_service
 {
-    static uint32_t uptime{0};
+    static float uptime{0.0f};
     static uint32_t simple_val{0};
     namespace uuid
     {
@@ -63,7 +63,7 @@ namespace demo_service
 
     void notify_uptime()
     {
-        uptime = k_uptime_get_32();
+        uptime = k_uptime_get_32()/1000.0f;
         const int gatt_res = bt_gatt_notify(nullptr,
 										&demo_svc.attrs[attr_idx::uptime],
 										&uptime,
