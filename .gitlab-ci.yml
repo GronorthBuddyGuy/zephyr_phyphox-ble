@@ -6,7 +6,7 @@ stages:
   - docs
   
 variables:
-    SRC_DIR: examples/simple_experiment
+    SRC_DIR: src
     NORDIC_CONNECT_SDK_VERSION: v2.0.0
     ZEPHYR_BOARD: nrf52dk_nrf52832
     # Paths defined in docker image
@@ -121,7 +121,7 @@ compile:
     stage: compile
     script:
     - cd $SDK_PATH
-    - west build $CI_PROJECT_DIR --board $ZEPHYR_BOARD
+    - west build $CI_PROJECT_DIR/examples/simple_experiment --board $ZEPHYR_BOARD
     # Build files required for static analysis
     - tar -cJf $CI_PROJECT_DIR/zephyr_build.tar.xz build
     # Headers from SDK and custom zephzr toolchain are required for proper analysis
