@@ -7,6 +7,7 @@ stages:
   
 variables:
     SRC_DIR: src
+    GIT_SUBMODULE_STRATEGY: recursive
     NORDIC_CONNECT_SDK_VERSION: v2.0.0
     ZEPHYR_BOARD: nrf52dk_nrf52832
     # Paths defined in docker image
