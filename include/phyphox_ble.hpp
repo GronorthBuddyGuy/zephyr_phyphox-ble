@@ -46,7 +46,7 @@ namespace phyphox_ble
     };
 
     /* Phy Phox Event data structure*/
-    struct __attribute__((__packed__)) Event
+    struct __attribute__((__packed__)) Event_t
     {
         EventTypes evt_type;    /* Type of event */
         uint64_t exp_time_ms;   /* Time the experiment has been running in ms*/
