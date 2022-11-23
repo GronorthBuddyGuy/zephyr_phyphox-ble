@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: GPL-3.0-or-later
 * @file phyphox_ble.hpp
 * @author Victor Chavez (chavez-bermudez@fh-aachen.de)
-* @date Nov 11, 2022
+* @date Nov 23, 2022
 *
 * @brief
 * Phyphox ble zephyr interface
@@ -14,7 +14,7 @@
 ********************************************************************/
 #pragma once
 #include <cstdint>
-#include "uuid_utils.hpp"
+#include <uuid_utils.hpp>
 
 namespace phyphox_ble
 {
@@ -52,6 +52,7 @@ namespace phyphox_ble
         uint64_t exp_time_ms;   /* Time the experiment has been running in ms*/
         uint64_t unix_time_ms;  /* Unix Time in ms from phyphox app*/
     };
+
     static constexpr uint8_t EVENT_SIZE{17U};
     static_assert(sizeof(Event)==EVENT_SIZE,"Phyphox event struct does not match EVENT_SIZE")
 
