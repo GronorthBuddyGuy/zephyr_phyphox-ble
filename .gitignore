@@ -4,3 +4,5 @@
 *.d
 *.hex
 *.bin
+*phyphox_autogen.cpp
+*phyphox_autogen.hpp

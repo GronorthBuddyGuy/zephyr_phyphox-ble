@@ -1,3 +1,17 @@
+/*!*****************************************************************
+* Copyright 2022, Victor Chavez
+* SPDX-License-Identifier: GPL-3.0-or-later
+* @file phyphox_ble.cpp
+* @author Victor Chavez (chavez-bermudez@fh-aachen.de)
+* @date Nov 23, 2022
+*
+* @brief
+* Phyphox ble zephyr implementation
+*
+* @par Dependencies
+* - language: C++17
+* - OS: Zephyr
+********************************************************************/
 #include <cstdint>
 #include <zephyr/sys/byteorder.h>
 #include <zephyr/bluetooth/gatt.h>
@@ -14,19 +28,6 @@ static uint16_t exp_xml_data_count{0U};
 static uint16_t exp_xml_next_idx{0U};
 static bool header_sent{false};
 
-namespace event
-{
-    static event_cb user_cb{nullptr};
-    static void * user_args{nullptr};
-}
-
-namespace exp_load
-{
-    static exp_load_cb user_cb{nullptr};
-    static void * user_args{nullptr};
-} // namespace exp_load_cb
-
-
 /*!< Offsets for Phyphox raw event data*/
 namespace offset
 {
@@ -38,16 +39,28 @@ namespace offset
 namespace experiment
 {
 
+namespace event
+{
+    static event_cb user_cb{nullptr};
+    static void * user_args{nullptr};
+}
+
+namespace load
+{
+    static experiment::load_cb user_cb{nullptr};
+    static void * user_args{nullptr};
+} // namespace exp_load_cb
+
 bool set_title(char * pData,uint8_t len)
 {
-    static constexpr uint16_t MAX_TITLE_LEN{EXP_TITLE_END - EXP_TITLE_START};
+    static constexpr uint16_t MAX_TITLE_LEN{autogen::EXP_TITLE_END - autogen::EXP_TITLE_START};
     if(pData!=nullptr && len<=MAX_TITLE_LEN)
     {
-        memcpy(&exp_data[EXP_TITLE_START],pData,len);
+        memcpy(&autogen::exp_data[autogen::EXP_TITLE_START],pData,len);
         if(len<MAX_TITLE_LEN)
         {
             const uint16_t remaining = MAX_TITLE_LEN-len;
-            memset(&exp_data[EXP_TITLE_START+len],(int)' ',remaining);
+            memset(&autogen::exp_data[autogen::EXP_TITLE_START+len],(int)' ',remaining);
         }
         return true;
     }
@@ -59,27 +72,27 @@ bool set_title(char * pData,uint8_t len)
 
 bool set_blename_in(char * pData,uint8_t len)
 {
-    if(BLE_END_NAME_IN == static_cast<uint16_t>(-1))
+    if(autogen::BLE_END_NAME_IN == static_cast<uint16_t>(-1))
     {
         return false;
     }
-    if(BLE_END_NAME_IN<=BLE_START_NAME_IN)
+    if(autogen::BLE_END_NAME_IN<=autogen::BLE_START_NAME_IN)
     {
         return false;
     }
-    static constexpr uint16_t MAX_NAME_LEN{BLE_END_NAME_IN - BLE_START_NAME_IN};
+    static constexpr uint16_t MAX_NAME_LEN = autogen::BLE_END_NAME_IN - autogen::BLE_START_NAME_IN;
     if(pData!=nullptr && len<=MAX_NAME_LEN)
     {
-        memcpy(&exp_data[BLE_START_NAME_IN],pData,len);
+        memcpy(&autogen::exp_data[autogen::BLE_START_NAME_IN],pData,len);
         if(len<MAX_NAME_LEN)
         {
             const uint16_t remaining = MAX_NAME_LEN-len;
-            exp_data[BLE_START_NAME_IN+len]='"';
+            autogen::exp_data[autogen::BLE_START_NAME_IN+len]='"';
             if(remaining > 1)
             {
-                memset(&exp_data[BLE_START_NAME_IN+len+1],(int)' ',remaining-1);
+                memset(&autogen::exp_data[autogen::BLE_START_NAME_IN+len+1],(int)' ',remaining-1);
             }
-            exp_data[BLE_END_NAME_IN]=' ';
+            autogen::exp_data[autogen::BLE_END_NAME_IN]=' ';
             
         }
         return true;
@@ -92,9 +105,9 @@ bool set_blename_in(char * pData,uint8_t len)
 
 void update_crc()
 {
-    const uint32_t crc = crc32_ieee(exp_data,sizeof(exp_data));
+    const uint32_t crc = crc32_ieee(autogen::exp_data,sizeof(autogen::exp_data));
     const uint32_t crc_be = sys_be32_to_cpu(crc);
-    uint8_t * header_start = &exp_header[HEADER_SIZE-sizeof(uint32_t)];
+    uint8_t * header_start = &autogen::exp_header[autogen::HEADER_SIZE-sizeof(uint32_t)];
     memcpy(header_start, &crc_be, sizeof(uint32_t));
 }
 
@@ -111,23 +124,28 @@ static void send_exp_xml();
 void exp_xml_notify_sent_cb(struct bt_conn *conn, void *user_data)
 {
     // continue sending xml if still data pending
-    if(exp_xml_data_count< phyphox_autogen::EXP_DATA_SIZE)
+    if(exp_xml_data_count< autogen::EXP_DATA_SIZE)
     {
         send_exp_xml();
     }
 }
 
-void register_expload_cb(expload_cb cb,void * args)
+namespace experiment
 {
-    exp_load::user_cb = cb;
-    exp_load::user_args = args;
+    void register_load_cb(load_cb cb,void * args)
+    {
+        load::user_cb = cb;
+        load::user_args = args;
+    }
+
+    void register_evt_cb(event_cb cb,void * args)
+    {
+        event::user_cb = cb;
+        event::user_args = args;
+    }
 }
 
-void register_evt_cb(event_cb cb,void * args)
-{
-    event::user_cb = cb;
-    event::user_args = args;
-}
+
 
 static void exp_xml_notify(const struct bt_gatt_attr *attr, uint16_t value)
 {
@@ -148,7 +166,9 @@ static ssize_t eventwrite_cb(struct bt_conn *conn,
 				uint8_t flags)
 {
     const auto pBufRaw = static_cast<const uint8_t*>(buf);
-    /* convert big endian to little endian*/
+    /* convert big endian to little endian
+        TODO fix the warnings about conversion
+    */
     const uint64_t exp_time_ms =    pBufRaw[offset::exptime+7] << 56 | 
                                 pBufRaw[offset::exptime+6] << 48 | 
                                 pBufRaw[offset::exptime+5] << 40 | 
@@ -166,15 +186,15 @@ static ssize_t eventwrite_cb(struct bt_conn *conn,
                                 pBufRaw[offset::unixtime+1] << 8  | 
                                 pBufRaw[offset::unixtime] << 16; 
 
-    const Event_t event_data = {.evt_type = static_cast<EventTypes>(pBufRaw[0]),
+    const experiment::Event_t event_data = {.evt_type = static_cast<experiment::EventTypes>(pBufRaw[0]),
                          .exp_time_ms = exp_time_ms,
                          .unix_time_ms = unixtime_ms
                         };
     
     
-    if(event::user_cb != nullptr)
+    if(experiment::event::user_cb != nullptr)
     {
-        event::user_cb(event_data,event::user_args);
+        experiment::event::user_cb(event_data,experiment::event::user_args);
     }
 	return len;
 }
@@ -219,20 +239,20 @@ static void send_exp_xml()
     if(header_sent == false)
     {
         header_sent = true;
-        exp_notify_params.data = &exp_header[0];
-        exp_notify_params.len = phyphox_autogen::HEADER_SIZE;
+        exp_notify_params.data = &autogen::exp_header[0];
+        exp_notify_params.len = autogen::HEADER_SIZE;
     }
     else
     {
         exp_xml_data_count+=MAX_PACKET_EXP_XML;
         uint8_t send_len{MAX_PACKET_EXP_XML};
-        if(exp_xml_data_count > phyphox_autogen::EXP_DATA_SIZE)
+        if(exp_xml_data_count > autogen::EXP_DATA_SIZE)
         {
-            const uint16_t extra = exp_xml_data_count- phyphox_autogen::EXP_DATA_SIZE;
+            const uint16_t extra = exp_xml_data_count- autogen::EXP_DATA_SIZE;
             send_len -=extra;
             finished_upload = true;
         }
-        exp_notify_params.data = &exp_data[exp_xml_next_idx];
+        exp_notify_params.data = &autogen::exp_data[exp_xml_next_idx];
         exp_notify_params.len = send_len;
         exp_xml_next_idx += send_len;
     }
@@ -240,9 +260,9 @@ static void send_exp_xml()
     __ASSERT(gatt_res==0,"Could not start notification of experiment");
     if(finished_upload)
     {
-        if(exp_load::user_cb != nullptr)
+        if(experiment::load::user_cb != nullptr)
         {
-            exp_load::user_cb(exp_load::user_args);
+            experiment::load::user_cb(experiment::load::user_args);
         }
     }
 }

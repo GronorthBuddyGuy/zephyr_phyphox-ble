@@ -1,3 +1,4 @@
 name: phyphox_ble
 build:
   cmake: .
+  kconfig: zephyr/Kconfig

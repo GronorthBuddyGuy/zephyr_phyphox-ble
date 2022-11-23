@@ -1,0 +1,15 @@
+# Phyphox ble Zephyr module
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+menuconfig Phyphox_BLE
+    bool "PHYPHOX_BLE"
+    default n
+    help
+        Enables the QPCPP Module
+
+if PHYPHOX_BLE
+
+module = PHYPHOX_BLE
+module-str = PHYPHOX_BLE
+
+endif

@@ -1,0 +1,3 @@
+[submodule "libs/uuid_utils"]
+	path = libs/uuid_utils
+	url = https://gitlab.com/iaam_embedded/zephyr/ble/uuid_utils
