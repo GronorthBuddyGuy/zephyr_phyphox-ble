@@ -1,0 +1,6 @@
+*.bak
+*build*
+*.o
+*.d
+*.hex
+*.bin
