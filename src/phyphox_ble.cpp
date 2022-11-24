@@ -214,7 +214,7 @@ BT_GATT_SERVICE_DEFINE(phy_phox_svc,
 							BT_GATT_PERM_WRITE,
 							nullptr,
 							eventwrite_cb,
-							nullptr),
+							nullptr)
 );
 
 
