@@ -260,3 +260,6 @@ pages:
         expire_in: 10 mins 
         paths:
         - public
+    rules:
+      - if: $CI_COMMIT_BRANCH == "main"
+
