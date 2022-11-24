@@ -71,3 +71,7 @@ If working with an NRF MCU you can install zephyr via [NRF Connect SDK](https://
 3. In the "Applications" category of the NRF connect plugin look for the "simple_experiment" project and click Add Build Configuration.
 4. Select a board.
 5. Click "Build Configuration"  
+
+## Contact
+
+Contact for issues, contributions as git patches or general information contact at chavez-bermudez@fh-aachen.de
