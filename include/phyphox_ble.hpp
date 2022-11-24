@@ -68,6 +68,8 @@ namespace phyphox_ble
 
 
         /*! @brief dynamically set the title of the experiment
+            @param pData[in] Buffer to new phyphox title of experiment
+            @param len[in] Length of the buffer
             @returns true - if success<br>
                      false - if len is greater than allowed or pData is nullptr
         */
@@ -77,10 +79,13 @@ namespace phyphox_ble
             @details changes the ble name filter used by the phyphox experiment
             @note  It assumes there is only one unique ble service as input. 
                     The phyphox experiment should use as placeholder: "ble_name_in_placeholder"
+            @param pData[in] Buffer to new ble name input
+            @param len[in] Length of the buffer
             @returns true - if success<br>
                      false - if len is greater than allowed or pData is nullptr
         */
         bool set_blename_in(char * pData,uint8_t len);
+
         /*! @brief Update the crc of the experiment after using any of the
                     functions located in this namespace
         */
@@ -92,10 +97,14 @@ namespace phyphox_ble
         using load_cb =  void (*)(void * args);
 
         /*! @brief Register a callback for phyphox experiment events
+            @param cb[in] Callback for phyphox events
+            @param args[in]  User arguments passed to the function
         */
         void register_evt_cb(event_cb cb,void * args);
 
-        /*! @brief Register a callback whenever the phyphox experiment has been loaded
+        /*! @brief Register a callback whenever the phyphox experiment has been loaded to phyphox app
+            @param cb[in] Callback for whenever phphox has loaded experiment
+            @param args[in] args User arguments passed to the function
         */
         void register_load_cb(load_cb cb,void * args);
     } // namespace experiment
