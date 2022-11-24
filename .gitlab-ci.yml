@@ -9,6 +9,7 @@ stages:
   
 variables:
     SRC_DIR: src
+    EXAMPLE_COMPILE: examples/simple_experiment
     GIT_SUBMODULE_STRATEGY: recursive
     NORDIC_CONNECT_SDK_VERSION: v2.0.0
     ZEPHYR_BOARD: nrf52dk_nrf52832
@@ -124,7 +125,7 @@ compile:
     stage: compile
     script:
     - cd $SDK_PATH
-    - west build $CI_PROJECT_DIR/examples/simple_experiment --board $ZEPHYR_BOARD
+    - west build $CI_PROJECT_DIR/$EXAMPLE_COMPILE --board $ZEPHYR_BOARD
     # Build files required for static analysis
     - tar -cJf $CI_PROJECT_DIR/zephyr_build.tar.xz build
     # Headers from SDK and custom zephzr toolchain are required for proper analysis
@@ -182,6 +183,7 @@ PVS Studio:
     script:
         # Add comments to use academic license
         - python3 pvs-free/pvs-free.py $SRC_DIR --add 
+        - python3 pvs-free/pvs-free.py $EXAMPLE_COMPILE --add 
         # PVS studio cant detect zephyr arm compiler, replace with vanilla arm-none-eabi
         - sed -i 's/arm-zephyr-eabi-gcc/arm-none-eabi-gcc/g' $COMPILATION_FILE 
         - sed -i 's/arm-zephyr-eabi-g++/arm-none-eabi-g++/g' $COMPILATION_FILE 
