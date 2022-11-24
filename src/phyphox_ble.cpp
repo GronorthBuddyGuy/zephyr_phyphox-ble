@@ -189,7 +189,7 @@ static ssize_t eventwrite_cb(struct bt_conn *conn,
     
     if(experiment::event::user_cb != nullptr)
     {
-        experiment::event::user_cb(event_data,experiment::event::user_args);
+        experiment::event::user_cb(event_data, experiment::event::user_args);
     }
 	return len;
 }
