@@ -104,7 +104,7 @@ static void onConnect(bt_conn *conn, uint8_t err)
     }
 }
 
-int main(void)
+int main()
 {
     ble_init();
     adv::start();
