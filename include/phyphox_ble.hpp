@@ -16,6 +16,11 @@
 #include <cstdint>
 #include <uuid_utils.hpp>
 
+/*!
+ *  \addtogroup zephyr_phyphox
+ *  @{
+ */
+
 /*!< zephyr phyphox ble module */ 
 namespace phyphox_ble
 {
@@ -116,3 +121,4 @@ namespace phyphox_ble
     } // namespace experiment
 
 } // namespace phyphox_ble
+/*! @} End of Doxygen Groups*/
