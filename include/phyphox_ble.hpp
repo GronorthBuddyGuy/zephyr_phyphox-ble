@@ -25,7 +25,7 @@
  *  @{
  */
 
-/*!< zephyr phyphox ble module */ 
+/*! zephyr phyphox ble module */ 
 namespace phyphox_ble
 {
     /*!< UUIDs for phyphox */ 
