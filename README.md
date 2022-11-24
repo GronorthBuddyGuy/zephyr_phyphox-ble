@@ -28,10 +28,9 @@ In addition, the phyphox uuid has to be advertised to allow to transmit the expe
 ```bash
 git clone url.git --recurse-submodules 
 ```
-2. Add the module to your zephyr extra modules path
+2. Add the module to your zephyr [extra modules](https://docs.zephyrproject.org/latest/develop/modules.html) path
 ```cmake
-set(ZEPHYR_EXTRA_MODULES ${MY_OTHER_ZEPHYR_EXTRA_MODULES}
-                         ${PATH_TO_PHYPHOX_BLE_MODULE}
+set(ZEPHYR_EXTRA_MODULES ${PATH_TO_PHYPHOX_BLE_MODULE}
     )
 ```
 
