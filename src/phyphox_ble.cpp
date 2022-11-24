@@ -34,7 +34,7 @@ namespace offset
     static constexpr uint8_t evt = 0;
     static constexpr uint8_t exptime = 1;
     static constexpr uint8_t unixtime = 9;
-}
+} // namespace offset
 
 namespace experiment
 {
@@ -43,7 +43,7 @@ namespace event
 {
     static event_cb user_cb{nullptr};
     static void * user_args{nullptr};
-}
+} // namespace event
 
 namespace load
 {
@@ -60,7 +60,9 @@ bool set_title(char * pData, uint8_t len)
         if(len<MAX_TITLE_LEN)
         {
             const uint16_t remaining = MAX_TITLE_LEN-len;
-            memset(&autogen::exp_data[autogen::EXP_TITLE_START+len], (int)' ', remaining);
+            memset(&autogen::exp_data[autogen::EXP_TITLE_START+len],
+                    static_cast<int>(' '),
+                    remaining);
         }
         return true;
     }
@@ -91,7 +93,7 @@ bool set_blename_in(char * pData, uint8_t len)
             if(remaining > 1)
             {
                 memset(&autogen::exp_data[autogen::BLE_START_NAME_IN+len+1],
-                        (int)' ',
+                        static_cast<int>(' '),
                         remaining-1);
             }
             autogen::exp_data[autogen::BLE_END_NAME_IN]=' ';
@@ -147,7 +149,7 @@ namespace experiment
         event::user_cb = cb;
         event::user_args = args;
     }
-}
+} // namespace experiment
 
 static void exp_xml_notify(const struct bt_gatt_attr *attr, uint16_t value)
 {
