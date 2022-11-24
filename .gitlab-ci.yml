@@ -252,7 +252,7 @@ pages:
     - sed -i "s!ProjectName!$CI_PROJECT_NAME!g" doxygen_cfg/Doxyfile.in
     #Replace input files in template
     - sed -i "s!INPUT_FILES!$SRC_DIR!g" doxygen_cfg/Doxyfile.in
-    - doxygen doxygen_cfg/Doxyfile.in
+    - doxygen doxygen_cfg/Doxyfile.in || true
     - mkdir public
     - mv html/* public
     artifacts:
