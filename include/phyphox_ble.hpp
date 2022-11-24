@@ -31,18 +31,18 @@ namespace phyphox_ble
     /*!< UUIDs for phyphox */ 
     namespace uuid
     {
-        /*!< Phyphox UUID base https://phyphox.org/wiki/index.php/Bluetooth_Low_Energy */
+        /*! Phyphox UUID base https://phyphox.org/wiki/index.php/Bluetooth_Low_Energy */
         static constexpr bt_uuid_128 base = BT_UUID_INIT_128(BT_UUID_128_ENCODE(0xCDDF0000, 
                                                                     0x30F7,
                                                                     0x4671,
                                                                     0x8B43,
                                                                     0x5E40BA53514A));
 
-        /*!  Configuration Service UUID, typically attached to advertisement data to recognize
+        /*! Configuration Service UUID, typically attached to advertisement data to recognize
         *    the ble peripheral as phyphox compatible in the app.
         */
         static constexpr bt_uuid_128 SERVICE = ble::utils::uuid::derive_uuid(base,0x0001);
-        /*!< phyphox characteristic UUIDs */
+        /*! phyphox characteristic UUIDs */
         namespace charact
         {
             static constexpr bt_uuid_128 EXP_XML= ble::utils::uuid::derive_uuid(base,0x0002);
@@ -50,7 +50,7 @@ namespace phyphox_ble
         }
     } // namespace uuid
 
-     /*!< Main API for phyphox experiment */ 
+     /*! Main API for phyphox experiment */ 
     namespace experiment
     {
         /*! Types of Events that originate from phy phox app while running
