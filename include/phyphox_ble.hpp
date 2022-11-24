@@ -85,6 +85,8 @@ namespace phyphox_ble
         /*! @brief dynamically set the title of the experiment
             @param [in] pData Buffer to new phyphox title of experiment
             @param [in] len Length of the buffer
+            @note  The max length of the title depends on the length of the placeholder text set in 
+                    the phyphox experiment.
             @returns true - if success<br>
                      false - if len is greater than allowed or pData is nullptr
         */
