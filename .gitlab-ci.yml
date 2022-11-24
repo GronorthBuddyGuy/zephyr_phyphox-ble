@@ -244,7 +244,7 @@ CodeChecker:
 pages:
     tags: 
     - shared
-    stage: docs
+    stage: pages
     script:
     - mkdir -p docs
     - git clone https://git.fh-aachen.de/embedded-guidelines/cfg/doxygen_cfg.git
