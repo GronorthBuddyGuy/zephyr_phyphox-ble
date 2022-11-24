@@ -51,16 +51,16 @@ namespace load
     static void * user_args{nullptr};
 } // namespace exp_load_cb
 
-bool set_title(char * pData,uint8_t len)
+bool set_title(char * pData, uint8_t len)
 {
     static constexpr uint16_t MAX_TITLE_LEN{autogen::EXP_TITLE_END - autogen::EXP_TITLE_START};
     if(pData!=nullptr && len<=MAX_TITLE_LEN)
     {
-        memcpy(&autogen::exp_data[autogen::EXP_TITLE_START],pData,len);
+        memcpy(&autogen::exp_data[autogen::EXP_TITLE_START], pData, len);
         if(len<MAX_TITLE_LEN)
         {
             const uint16_t remaining = MAX_TITLE_LEN-len;
-            memset(&autogen::exp_data[autogen::EXP_TITLE_START+len],(int)' ',remaining);
+            memset(&autogen::exp_data[autogen::EXP_TITLE_START+len], (int)' ', remaining);
         }
         return true;
     }
@@ -70,7 +70,7 @@ bool set_title(char * pData,uint8_t len)
     }
 }
 
-bool set_blename_in(char * pData,uint8_t len)
+bool set_blename_in(char * pData, uint8_t len)
 {
     if(autogen::BLE_END_NAME_IN == static_cast<uint16_t>(-1))
     {
@@ -83,14 +83,16 @@ bool set_blename_in(char * pData,uint8_t len)
     static constexpr uint16_t MAX_NAME_LEN = autogen::BLE_END_NAME_IN - autogen::BLE_START_NAME_IN;
     if(pData!=nullptr && len<=MAX_NAME_LEN)
     {
-        memcpy(&autogen::exp_data[autogen::BLE_START_NAME_IN],pData,len);
+        memcpy(&autogen::exp_data[autogen::BLE_START_NAME_IN], pData, len);
         if(len<MAX_NAME_LEN)
         {
             const uint16_t remaining = MAX_NAME_LEN-len;
             autogen::exp_data[autogen::BLE_START_NAME_IN+len]='"';
             if(remaining > 1)
             {
-                memset(&autogen::exp_data[autogen::BLE_START_NAME_IN+len+1],(int)' ',remaining-1);
+                memset(&autogen::exp_data[autogen::BLE_START_NAME_IN+len+1],
+                        (int)' ',
+                        remaining-1);
             }
             autogen::exp_data[autogen::BLE_END_NAME_IN]=' ';
             
@@ -105,7 +107,7 @@ bool set_blename_in(char * pData,uint8_t len)
 
 void update_crc()
 {
-    const uint32_t crc = crc32_ieee(autogen::exp_data,sizeof(autogen::exp_data));
+    const uint32_t crc = crc32_ieee(autogen::exp_data, sizeof(autogen::exp_data));
     const uint32_t crc_be = sys_be32_to_cpu(crc);
     uint8_t * header_start = &autogen::exp_header[autogen::HEADER_SIZE-sizeof(uint32_t)];
     memcpy(header_start, &crc_be, sizeof(uint32_t));
@@ -134,13 +136,13 @@ void exp_xml_notify_sent_cb(struct bt_conn *conn, void *user_data)
 
 namespace experiment
 {
-    void register_load_cb(load_cb cb,void * args)
+    void register_load_cb(load_cb cb, void * args)
     {
         load::user_cb = cb;
         load::user_args = args;
     }
 
-    void register_evt_cb(event_cb cb,void * args)
+    void register_evt_cb(event_cb cb, void * args)
     {
         event::user_cb = cb;
         event::user_args = args;
@@ -174,8 +176,8 @@ static ssize_t eventwrite_cb(struct bt_conn *conn,
     */
     uint64_t exp_time_ms{0};
     uint64_t unixtime_ms{0};
-    memcpy(&exp_time_ms,&pBufRaw[offset::exptime],sizeof(exp_time_ms));
-    memcpy(&unixtime_ms,&pBufRaw[offset::unixtime],sizeof(unixtime_ms));
+    memcpy(&exp_time_ms, &pBufRaw[offset::exptime], sizeof(exp_time_ms));
+    memcpy(&unixtime_ms, &pBufRaw[offset::unixtime], sizeof(unixtime_ms));
     exp_time_ms = sys_cpu_to_be64(exp_time_ms);
     unixtime_ms = sys_cpu_to_be64(unixtime_ms);
     const experiment::Event_t event_data =
@@ -247,8 +249,8 @@ static void send_exp_xml()
         exp_notify_params.len = send_len;
         exp_xml_next_idx += send_len;
     }
-    const int gatt_res = bt_gatt_notify_cb(nullptr,&exp_notify_params);
-    __ASSERT(gatt_res==0,"Could not start notification of experiment, check MTU Size");
+    const int gatt_res = bt_gatt_notify_cb(nullptr, &exp_notify_params);
+    __ASSERT(gatt_res==0, "Could not start notification of experiment, check MTU Size");
     if(finished_upload)
     {
         if(experiment::load::user_cb != nullptr)
