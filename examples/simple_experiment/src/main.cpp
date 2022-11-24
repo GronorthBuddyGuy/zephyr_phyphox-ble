@@ -82,6 +82,9 @@ void ble_init()
 static void mtuexchange_cb(bt_conn *conn, uint8_t err,
 		                    bt_gatt_exchange_params *params)
 {
+    static_cast<void>(conn);
+    static_cast<void>(err);
+    static_cast<void>(params);
     printk("MTU exchang done\n");
 }
 
