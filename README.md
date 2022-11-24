@@ -45,7 +45,7 @@ The example continously sends the uptime (seconds) of the zephyr kernel and a ra
 
 To test the example open the phyphox app and the experiment either via the phyphox editor (QR Code generation) or download it over BLE. The experiment should look as follows:
 
-![alt text](images/simple_experiment.png)
+<img src="images/simple_experiment.png" width="200" height="200" />
 
 #### Build
 
