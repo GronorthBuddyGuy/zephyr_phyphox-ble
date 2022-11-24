@@ -23,16 +23,31 @@ In addition, the phyphox uuid has to be advertised to allow to transmit the expe
 
 ## Phyphox experiment
 
-The library requires as input a phyphox experiment (.phyphox extension). This experiment should be tailored for the specific BLE application. The library converts this experiment to a raw C array of data which is internally used to transmit the file to the phyphox app.
+The library requires as input a phyphox experiment (.phyphox extension). This experiment should be tailored for the specific BLE application. The library converts this experiment to a raw C array of data which is internally used to transmit the file to the phyphox app. The experiment is currently stored in RAM to allow dynamic modification of some fields at run-time (see below).
 
 ## Custom fields
 
 Some fields from the phyphox xml can be modified to personalize the experiment and create a unique id which can be loaded to phyphox. This is useful in case that you will deploy the same firmware to different devices. If you have the same BLE Name or experiment title, then each time you load it in the phyphox app it is difficult to pinpoint which device is currently connected or to filter which BLE Name you want to connect to. 
 
-To enable this feature a placeholder has to be added to the BLE subelement property name
+### Experiment title
+
+Placeholder: Does not apply. For the title you can add a dummy text which can then be replaced via the API.
+
+Example:
+- `<title>My dummy placeholder example</title>`
+
+To replace the placeholder the user has the API `phyphox_ble::experiment::set_title`
+
+Note: Due to simplification reasons, the api `phyphox_ble::experiment::set_title` requires that the new title must be less than or equal to the length of the placeholder. Otherwise the experiment would need to be adjusted dynamically and the allocated size of the array would need to change at run-time.
+
+### BLE Input Name
+
+Placeholder: `ble_name_in_placeholder`. Example:
 - `<input><bluetooth name="ble_name_in_placeholder">`
 
 To replace the placeholder the user has the API `phyphox_ble::experiment::set_blename_in`
+
+
 
 ## Installation
 
