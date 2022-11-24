@@ -34,6 +34,12 @@ set(ZEPHYR_EXTRA_MODULES ${PATH_TO_PHYPHOX_BLE_MODULE}
     )
 ```
 
+3. Indicate the path where the phyphox experiment for your application is located
+
+```cmake
+set(PHYPHOX_EXP  ${CMAKE_CURRENT_SOURCE_DIR}/experiment.phyphox CACHE STRING INTERNAL)
+```
+
 ## Examples
 
 ### Simple experiment
