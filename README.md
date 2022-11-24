@@ -73,7 +73,7 @@ set(PHYPHOX_EXP  ${CMAKE_CURRENT_SOURCE_DIR}/experiment.phyphox CACHE STRING INT
 
 ### Simple experiment
 
-Located in `examples/simple_experiment`, this example consists of the integration of this zephyr module and how it can be integrated with a custom ble service to show how data can be transmitted to the phyphox app. The demo includes a simple experiment located in `examples/simple_experiment/experiment.phyphox`. This experiment can be loaded in the phyphox [editor](https://phyphox.org/editor/) to understand how it works or for further modifications.
+Located in `examples/simple_experiment`, this example has a custom ble service that transmits data to the phyphox app. The demo includes a simple experiment located in `examples/simple_experiment/experiment.phyphox`. This experiment can be loaded in the phyphox [editor](https://phyphox.org/editor/) to understand how it works or for further modifications.
 
 The example continously sends the uptime (seconds) of the zephyr kernel and a random value. These values are sent as notifications over a custom ble service located in `examples/simple_experiment/src/demo_service.hpp`.
 
