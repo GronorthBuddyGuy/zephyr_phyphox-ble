@@ -135,6 +135,7 @@ compile:
     - cd $ZEPHYR_SYSTEM_LIB
     - find . -name "*.h" | tar -cJf $CI_PROJECT_DIR/zephyr_sys.tar.xz -T -
     artifacts:
+      expire_in: 10 mins 
       paths:
       - zephyr_build.tar.xz
       - zephyr_sdk.tar.xz
