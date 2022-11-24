@@ -10,7 +10,7 @@ stages:
   
 variables:
     SRC_DIR: src
-    DOXYGEN_INPUT: "include/phyphox_ble.hpp src/phyphox_ble.cpp"
+    DOXYGEN_INPUT: "include/phyphox_ble.hpp"
     EXAMPLE_COMPILE: examples/simple_experiment
     GIT_SUBMODULE_STRATEGY: recursive
     NORDIC_CONNECT_SDK_VERSION: v2.0.0
