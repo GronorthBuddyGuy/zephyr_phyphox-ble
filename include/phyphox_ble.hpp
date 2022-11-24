@@ -97,11 +97,6 @@ namespace phyphox_ble
         */
         bool set_blename_in(char * pData,uint8_t len);
 
-        /*! @brief Update the crc of the experiment after using any of the
-                    functions located in this namespace
-        */
-        void update_crc();
-
         /*! @brief Callback to report service has sent experiment to phyphox app
             @param [in] args User arguments passed to the function
         */

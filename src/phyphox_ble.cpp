@@ -51,6 +51,17 @@ namespace load
     static void * user_args{nullptr};
 } // namespace exp_load_cb
 
+/*! @brief Update the crc of the experiment after using any of the
+            functions located in this namespace
+*/
+static void update_crc()
+{
+    const uint32_t crc = crc32_ieee(autogen::exp_data, sizeof(autogen::exp_data));
+    const uint32_t crc_be = sys_be32_to_cpu(crc);
+    uint8_t * header_start = &autogen::exp_header[autogen::HEADER_SIZE-sizeof(uint32_t)];
+    memcpy(header_start, &crc_be, sizeof(uint32_t));
+}
+
 bool set_title(char * pData, uint8_t len)
 {
     static constexpr uint16_t MAX_TITLE_LEN{autogen::EXP_TITLE_END - autogen::EXP_TITLE_START};
@@ -64,6 +75,7 @@ bool set_title(char * pData, uint8_t len)
                     static_cast<int>(' '),
                     remaining);
         }
+        update_crc();
         return true;
     }
     else
@@ -99,6 +111,7 @@ bool set_blename_in(char * pData, uint8_t len)
             autogen::exp_data[autogen::BLE_END_NAME_IN]=' ';
             
         }
+        update_crc();
         return true;
     }
     else
@@ -107,13 +120,6 @@ bool set_blename_in(char * pData, uint8_t len)
     }
 }
 
-void update_crc()
-{
-    const uint32_t crc = crc32_ieee(autogen::exp_data, sizeof(autogen::exp_data));
-    const uint32_t crc_be = sys_be32_to_cpu(crc);
-    uint8_t * header_start = &autogen::exp_header[autogen::HEADER_SIZE-sizeof(uint32_t)];
-    memcpy(header_start, &crc_be, sizeof(uint32_t));
-}
 
 } // namespace experiment
 
