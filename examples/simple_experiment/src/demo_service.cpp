@@ -63,7 +63,9 @@ namespace demo_service
 
     void notify_uptime()
     {
-        uptime = k_uptime_get_32()/1000.0f;
+        static constexpr float ms_to_s{1000.0f};
+        const uint32_t uptime_ms =  k_uptime_get_32();
+        uptime = static_cast<float>(uptime_ms)/ms_to_s;
         const int gatt_res = bt_gatt_notify(nullptr,
 										&demo_svc.attrs[attr_idx::uptime],
 										&uptime,
