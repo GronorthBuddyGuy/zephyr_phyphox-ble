@@ -21,6 +21,19 @@ This module allows to easily integrate the phyphox ble service. This service is 
 
 In addition, the phyphox uuid has to be advertised to allow to transmit the experiment over BLE in the phyphox app. Check the `examples` directory for a template on how to integrate this in zephyr.
 
+## Phyphox experiment
+
+The library requires as input a phyphox experiment (.phyphox extension). This experiment should be tailored for the specific BLE application. The library converts this experiment to a raw C array of data which is internally used to transmit the file to the phyphox app.
+
+## Custom fields
+
+Some fields from the phyphox xml can be modified to personalize the experiment and create a unique id which can be loaded to phyphox. This is useful in case that you will deploy the same firmware to different devices. If you have the same BLE Name or experiment title, then each time you load it in the phyphox app it is difficult to pinpoint which device is currently connected or to filter which BLE Name you want to connect to. 
+
+To enable this feature a placeholder has to be added to the BLE subelement property name
+- `<input><bluetooth name="ble_name_in_placeholder">`
+
+To replace the placeholder the user has the API `phyphox_ble::experiment::set_blename_in`
+
 ## Installation
 
 1. Clone this repository and add it to your main zephyr project
@@ -74,4 +87,4 @@ If working with an NRF MCU you can install zephyr via [NRF Connect SDK](https://
 
 ## Contact
 
-Contact for issues, contributions as git patches or general information contact at chavez-bermudez@fh-aachen.de
+Contact for issues, contributions as git patches or general information at chavez-bermudez@fh-aachen.de
