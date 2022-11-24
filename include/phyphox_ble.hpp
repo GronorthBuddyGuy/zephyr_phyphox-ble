@@ -34,8 +34,7 @@ namespace phyphox_ble
             static constexpr bt_uuid_128 EXP_XML= ble::utils::uuid::derive_uuid(base,0x0002);
             static constexpr bt_uuid_128 EVENT = ble::utils::uuid::derive_uuid(base,0x0004);
         }
-    }
-
+    } // namespace uuid
 
     namespace experiment
     {
@@ -99,6 +98,6 @@ namespace phyphox_ble
         /*! @brief Register a callback whenever the phyphox experiment has been loaded
         */
         void register_load_cb(load_cb cb,void * args);
-    }
+    } // namespace experiment
 
 } // namespace phyphox_ble
