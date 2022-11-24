@@ -48,7 +48,7 @@ namespace phyphox_ble
             SYNC = 0xFF /*!< Phy Phox has connected*/
         };
 
-        /* Phy Phox Event data structure*/
+        /*! Phy Phox Event data structure*/
         struct __attribute__((__packed__)) Event_t
         {
             EventTypes evt_type;    /* Type of event */
@@ -68,8 +68,8 @@ namespace phyphox_ble
 
 
         /*! @brief dynamically set the title of the experiment
-            @param pData[in] Buffer to new phyphox title of experiment
-            @param len[in] Length of the buffer
+            @param [in] pData Buffer to new phyphox title of experiment
+            @param [in] len Length of the buffer
             @returns true - if success<br>
                      false - if len is greater than allowed or pData is nullptr
         */
@@ -79,8 +79,8 @@ namespace phyphox_ble
             @details changes the ble name filter used by the phyphox experiment
             @note  It assumes there is only one unique ble service as input. 
                     The phyphox experiment should use as placeholder: "ble_name_in_placeholder"
-            @param pData[in] Buffer to new ble name input
-            @param len[in] Length of the buffer
+            @param [in] pData Buffer to new ble name input
+            @param [in] len Length of the buffer
             @returns true - if success<br>
                      false - if len is greater than allowed or pData is nullptr
         */
@@ -92,19 +92,19 @@ namespace phyphox_ble
         void update_crc();
 
         /*! @brief Callback to report service has sent experiment to phyphox app
-            @param args User arguments passed to the function
+            @param [in] args User arguments passed to the function
         */
         using load_cb =  void (*)(void * args);
 
         /*! @brief Register a callback for phyphox experiment events
-            @param cb[in] Callback for phyphox events
-            @param args[in]  User arguments passed to the function
+            @param [in] cb Callback for phyphox events
+            @param [in] args User arguments passed to the function
         */
         void register_evt_cb(event_cb cb,void * args);
 
         /*! @brief Register a callback whenever the phyphox experiment has been loaded to phyphox app
-            @param cb[in] Callback for whenever phphox has loaded experiment
-            @param args[in] args User arguments passed to the function
+            @param [in] cb Callback for whenever phphox has loaded experiment
+            @param [in] args args User arguments passed to the function
         */
         void register_load_cb(load_cb cb,void * args);
     } // namespace experiment
