@@ -37,16 +37,16 @@ Placeholder: Does not apply. For the title you can add a dummy text which can th
 Example:
 - `<title>My dummy placeholder example</title>`
 
-To replace the placeholder the user has the API `phyphox_ble::experiment::set_title`
+API: [`phyphox_ble::experiment::set_title`](https://iaam_embedded.pages.fh-aachen.de/zephyr/ble/zephyr_phyphox-ble/#_CPPv4N11phyphox_ble10experiment9set_titleEPc7uint8_t)
 
-Note: Due to simplification reasons, the api `phyphox_ble::experiment::set_title` requires that the new title must be less than or equal to the length of the placeholder. Otherwise the experiment would need to be adjusted dynamically and the allocated size of the array would need to change at run-time.
+Note: Due to simplification reasons, the new title must be less than or equal to the length of the placeholder. Otherwise the experiment would need to be adjusted dynamically and the allocated size of the array would need to change at run-time.
 
 ### BLE Input Name
 
 Placeholder: `ble_name_in_placeholder`. Example:
 - `<input><bluetooth name="ble_name_in_placeholder">`
 
-To replace the placeholder the user has the API `phyphox_ble::experiment::set_blename_in`
+API: [`phyphox_ble::experiment::set_blename_in`](https://iaam_embedded.pages.fh-aachen.de/zephyr/ble/zephyr_phyphox-ble/#_CPPv4N11phyphox_ble10experiment14set_blename_inEPc7uint8_t)
 
 
 
