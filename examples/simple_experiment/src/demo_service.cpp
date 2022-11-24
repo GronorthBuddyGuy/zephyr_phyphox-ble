@@ -33,13 +33,13 @@ namespace demo_service
             static constexpr bt_uuid_128 UPTIME= ble::utils::uuid::derive_uuid(BASE,0x0002);
             static constexpr bt_uuid_128 SIMPLE_VAL = ble::utils::uuid::derive_uuid(BASE,0x0003);
         }
-    }
+    } // namespace uuid
 
     namespace attr_idx
     {
         constexpr uint8_t uptime{2U};
         constexpr uint8_t simple_val{4U};
-    }
+    } // namespace attr_idx
 
     BT_GATT_SERVICE_DEFINE(demo_svc,
         BT_GATT_PRIMARY_SERVICE( (void *)&uuid::SERVICE), // idx 0

@@ -58,7 +58,8 @@ void start()
     __ASSERT(err==0,"Adv start failed %d",err);
 }
 
-}
+} // namespace adv
+
 void ble_init()
 {
     int res{0U};
