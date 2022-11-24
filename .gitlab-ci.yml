@@ -231,7 +231,7 @@ CodeChecker:
         - echo -e "-$SDK_PATH/*\n" >> skip.file
         - echo -e "-*uuid_utils.hpp" >> skip.file
         #Analyze the files
-        - CodeChecker analyze $COMPILATION_FILE --ctu -i skip.file --enable extreme --disable cppcoreguidelines-init-variables --disable modernize-use-using --output $CODECHECKER_ANALYZER_OUT --config codechecker-cfg/FH-Codechecker.json || true
+        - CodeChecker analyze $COMPILATION_FILE --ctu -i skip.file --enable extreme --disable cppcoreguidelines-init-variables --output $CODECHECKER_ANALYZER_OUT --config codechecker-cfg/FH-Codechecker.json || true
         #Parse the analysis as html
         - CodeChecker parse --export html --output ${REPORT_DIR} $CODECHECKER_ANALYZER_OUT
     artifacts:
