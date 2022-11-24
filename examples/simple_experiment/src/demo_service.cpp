@@ -10,6 +10,7 @@
 * - OS: Zephyr
 ********************************************************************/
 #include <zephyr/bluetooth/gatt.h>
+#include <zephyr/sys/util.h>
 #include <uuid_utils.hpp>
 #include "demo_service.hpp"
 
