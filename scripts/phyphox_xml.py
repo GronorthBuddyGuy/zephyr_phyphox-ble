@@ -41,10 +41,16 @@ start_exp_title = xml_str.find("<title>")+len("<title>")
 end_exp_title = xml_str.find("</title>")
 ble_in_placeholder = "ble_name_in_placeholder"
 start_ble_in_name = xml_str.find(ble_in_placeholder)
-end_ble_in_name =start_ble_in_name + len(ble_in_placeholder)
+if start_ble_in_name != -1:
+    end_ble_in_name =start_ble_in_name + len(ble_in_placeholder)
+else:
+    end_ble_in_name = 0
 ble_out_placeholder = "ble_name_out_placeholder"
 start_ble_out_name = xml_str.find(ble_out_placeholder)
-end_ble_out_name = start_ble_out_name+len(ble_out_placeholder)
+if start_ble_out_name != -1:
+    end_ble_out_name =start_ble_out_name + len(ble_out_placeholder)
+else:
+    end_ble_out_name = 0
 # Described in https://phyphox.org/wiki/index.php/Bluetooth_Low_Energy 
 # section - Sending phyphox-files from a device (0002 and 0003)
 crc32 = zlib.crc32(xml_str.encode())
