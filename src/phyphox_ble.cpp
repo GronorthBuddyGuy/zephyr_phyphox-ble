@@ -208,7 +208,7 @@ BT_GATT_SERVICE_DEFINE(phy_phox_svc,
 							nullptr,
 							nullptr),
 	BT_GATT_CCC(exp_xml_notify, // idx 2
-		    BT_GATT_PERM_READ | BT_GATT_PERM_WRITE), // cppcheck-suppress syntaxError
+		    BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
 	BT_GATT_CHARACTERISTIC( (bt_uuid *)&uuid::charact::EVENT,  // idx 3
 							BT_GATT_CHRC_WRITE,
 							BT_GATT_PERM_WRITE,
