@@ -19,6 +19,9 @@ release = '1.0.0'
 extensions = [ 'breathe',
                 'sphinx_rtd_theme']
 
+# CPP attributes
+cpp_id_attributes = ["__attribute__"]
+
 # Breathe Configuration
 breathe_projects = {"phyphox": "xml/"}
 breathe_default_project = "phyphox"
