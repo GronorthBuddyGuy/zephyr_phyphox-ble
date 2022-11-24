@@ -28,7 +28,7 @@
 /*! zephyr phyphox ble module */ 
 namespace phyphox_ble
 {
-    /*!< UUIDs for phyphox */ 
+    /*! 128 bit BLE UUIDs for phyphox */ 
     namespace uuid
     {
         /*! Phyphox UUID base https://phyphox.org/wiki/index.php/Bluetooth_Low_Energy */
