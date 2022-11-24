@@ -123,6 +123,8 @@ static void send_exp_xml();
 */
 void exp_xml_notify_sent_cb(struct bt_conn *conn, void *user_data)
 {
+    static_cast<void>(conn);
+    static_cast<void>(user_data);
     // continue sending xml if still data pending
     if(exp_xml_data_count< autogen::EXP_DATA_SIZE)
     {
@@ -147,6 +149,7 @@ namespace experiment
 
 static void exp_xml_notify(const struct bt_gatt_attr *attr, uint16_t value)
 {
+    static_cast<void>(attr);
     const bool notify_enabled = value == BT_GATT_CCC_NOTIFY;
     if(notify_enabled)
     {
