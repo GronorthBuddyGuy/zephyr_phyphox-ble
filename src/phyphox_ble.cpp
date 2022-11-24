@@ -162,6 +162,10 @@ static ssize_t eventwrite_cb(struct bt_conn *conn,
 				const void *buf, uint16_t len, uint16_t offset,
 				uint8_t flags)
 {
+    static_cast<void>(conn);
+    static_cast<void>(attr);
+    static_cast<void>(offset);
+    static_cast<void>(flags);
     const auto pBufRaw = static_cast<const uint8_t*>(buf);
     /* convert big endian to little endian
     */
