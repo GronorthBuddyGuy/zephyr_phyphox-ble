@@ -64,7 +64,7 @@ namespace phyphox_ble
             @param evt The event that was triggered
             @param args User arguments passed to the function
         */
-        typedef void (*event_cb)(const Event_t evt, void * args);
+        using event_cb = void (*)(const Event_t evt, void * args);
 
 
         /*! @brief dynamically set the title of the experiment
@@ -89,7 +89,7 @@ namespace phyphox_ble
         /*! @brief Callback to report service has sent experiment to phyphox app
             @param args User arguments passed to the function
         */
-        typedef void (*load_cb)(void * args);
+        using load_cb =  void (*)(void * args);
 
         /*! @brief Register a callback for phyphox experiment events
         */
