@@ -164,25 +164,13 @@ static ssize_t eventwrite_cb(struct bt_conn *conn,
 {
     const auto pBufRaw = static_cast<const uint8_t*>(buf);
     /* convert big endian to little endian
-        TODO fix the warnings about conversion
     */
-    const uint64_t exp_time_ms =    pBufRaw[offset::exptime+7] << 56 | 
-                                pBufRaw[offset::exptime+6] << 48 | 
-                                pBufRaw[offset::exptime+5] << 40 | 
-                                pBufRaw[offset::exptime+4] << 32 | 
-                                pBufRaw[offset::exptime+3] << 24 |
-                                pBufRaw[offset::exptime+2] << 16 |  
-                                pBufRaw[offset::exptime+1] << 8  | 
-                                pBufRaw[offset::exptime] << 16; 
-    const uint64_t unixtime_ms =pBufRaw[offset::unixtime+7] << 56 | 
-                                pBufRaw[offset::unixtime+6] << 48 | 
-                                pBufRaw[offset::unixtime+5] << 40 | 
-                                pBufRaw[offset::unixtime+4] << 32 | 
-                                pBufRaw[offset::unixtime+3] << 24 |
-                                pBufRaw[offset::unixtime+2] << 16 |  
-                                pBufRaw[offset::unixtime+1] << 8  | 
-                                pBufRaw[offset::unixtime] << 16; 
-
+    uint64_t exp_time_ms{0};
+    uint64_t unixtime_ms{0};
+    memcpy(&exp_time_ms,&pBufRaw[offset::exptime],sizeof(exp_time_ms));
+    memcpy(&unixtime_ms,&pBufRaw[offset::unixtime],sizeof(unixtime_ms));
+    exp_time_ms = sys_cpu_to_be64(exp_time_ms);
+    unixtime_ms = sys_cpu_to_be64(unixtime_ms);
     const experiment::Event_t event_data =
     {
         .evt_type = static_cast<experiment::EventTypes>(pBufRaw[0]),
