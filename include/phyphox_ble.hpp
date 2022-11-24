@@ -11,10 +11,14 @@
 * @par Dependencies
 * - language: C++17
 * - OS: Zephyr
+* @defgroup zephyr_phyphox Zephyr Phyphox
+*  Group that holds the phyphox BLE API for the Zephyr OS
 ********************************************************************/
 #pragma once
 #include <cstdint>
 #include <uuid_utils.hpp>
+
+
 
 /*!
  *  \addtogroup zephyr_phyphox
