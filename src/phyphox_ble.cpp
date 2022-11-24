@@ -196,9 +196,6 @@ static ssize_t eventwrite_cb(struct bt_conn *conn,
 	return len;
 }
 
-
-constexpr uint8_t exp_xml_char_idx{1U};
-
 BT_GATT_SERVICE_DEFINE(phy_phox_svc,
 	BT_GATT_PRIMARY_SERVICE( (void *)&uuid::SERVICE), // idx 0
 	BT_GATT_CHARACTERISTIC( (bt_uuid *)&uuid::charact::EXP_XML,  // idx 1
@@ -220,6 +217,7 @@ BT_GATT_SERVICE_DEFINE(phy_phox_svc,
 
 static void send_exp_xml()
 {
+    constexpr uint8_t exp_xml_char_idx{1U};
     bt_gatt_notify_params exp_notify_params =
     {
         .uuid = nullptr,
