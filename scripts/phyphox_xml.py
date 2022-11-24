@@ -6,7 +6,7 @@ import pathlib
 import zlib
 import re
 
-#Filter phyphox editor pos, as its only needed for the GUI
+#Filter phyphox editor pos, as its only needed for the phyphox editor gui
 EDITOR_POS_REGEX = r"(editor:uuid=[\"^0-9a.^0-9a\"]+|editor:posx=[\"^0-9a.^0-9a\"]+|editor:posy=[\"^0-9a.^0-9a\"]+)"
 TAG_WHITESPACE_REGEX = '\s+(?=<)'
 FILE_NAME_BASE = "phyphox_autogen"
@@ -25,6 +25,7 @@ xml_file = open(args.file,"r")
 xml_str = xml_file.read()
 xml_str = re.sub(EDITOR_POS_REGEX, " ", xml_str, 0, re.MULTILINE)
 xml_str = re.sub(TAG_WHITESPACE_REGEX, '', xml_str)
+
 DESCR_START_STRING = "<description>"
 descr_start = xml_str.find("<description>") + len(DESCR_START_STRING)
 descr_end = xml_str.find("</description>")
@@ -36,7 +37,7 @@ xml_str = xml_str[:descr_start] + description_str + xml_str[descr_end:]
 xml_len = len(xml_str)
 xml_hex_str = xml_str.encode("utf-8").hex()
 xml_c_data_len = int(len(xml_hex_str)/2)
-# device id pattern that can be replaced by ble peripheral
+
 start_exp_title = xml_str.find("<title>")+len("<title>")
 end_exp_title = xml_str.find("</title>")
 ble_in_placeholder = "ble_name_in_placeholder"
@@ -51,6 +52,7 @@ if start_ble_out_name != -1:
     end_ble_out_name =start_ble_out_name + len(ble_out_placeholder)
 else:
     end_ble_out_name = 0
+
 # Described in https://phyphox.org/wiki/index.php/Bluetooth_Low_Energy 
 # section - Sending phyphox-files from a device (0002 and 0003)
 crc32 = zlib.crc32(xml_str.encode())
