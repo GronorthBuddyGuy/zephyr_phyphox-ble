@@ -189,6 +189,7 @@ PVS Studio:
         - sed -i 's/arm-zephyr-eabi-g++/arm-none-eabi-g++/g' $COMPILATION_FILE 
         - sed -i 's!workdir/zephyr-sdk/arm-zephyr-eabi/bin!usr/bin!g' $COMPILATION_FILE
         - pvs-studio-analyzer analyze -f $COMPILATION_FILE -o project.log -e \*$SDK_PATH/\* -e \*$ZEPHYR_SYSLIB/\*
+        # disable rule V1042 as its an open source project
         - plog-converter -t fullhtml project.log -o $REPORT_DIR -d V1042
         - |- 
           if ! grep -q Congratulations "$REPORT_DIR/index.html"; then
