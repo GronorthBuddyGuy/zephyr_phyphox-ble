@@ -224,7 +224,8 @@ CodeChecker:
         # more information about the skip file format:
         # https://codechecker.readthedocs.io/en/latest/analyzer/user_guide/#skip
         - echo -e "+*/$SRC_DIR\n" >> skip.file #only analyze the source files
-        - echo -e "-$SDK_PATH/*" >> skip.file
+        - echo -e "-$SDK_PATH/*\n" >> skip.file
+        - echo -e "-*uuid_utils.hpp" >> skip.file
         #Analyze the files
         - CodeChecker analyze $COMPILATION_FILE --ctu -i skip.file --enable extreme --output $CODECHECKER_ANALYZER_OUT --config codechecker-cfg/FH-Codechecker.json || true
         #Parse the analysis as html
