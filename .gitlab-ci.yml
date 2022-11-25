@@ -262,7 +262,6 @@ pages:
     - mv xml ${CI_PROJECT_DIR}/docs/xml
     - cd ${CI_PROJECT_DIR}
     - sphinx-build -b html docs sphinx_html
-    - mkdir public
     - mv sphinx_html/* public
     artifacts:
         expire_in: 10 mins 
