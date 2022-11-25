@@ -250,16 +250,17 @@ pages:
     before_script:
     - pip3 install -U sphinx breathe sphinx_rtd_theme
     script:
-    - mkdir -p docs
-    - git clone https://git.fh-aachen.de/embedded-guidelines/cfg/doxygen_cfg.git
+    - mkdir public
+    - git clone https://git.fh-aachen.de/embedded-guidelines/cfg/doxygen_cfg.git --recurse-submodules --branch v1.0.1
+    - cd doxygen_cfg
     #change name for project in doxyfile
-    - sed -i "s!ProjectName!$CI_PROJECT_NAME!g" doxygen_cfg/Doxyfile.in
+    - sed -i "s!ProjectName!$CI_PROJECT_NAME!g" Doxyfile.in
     #Replace input files in template
-    - sed -i "s!INPUT_FILES!$DOXYGEN_INPUT!g" doxygen_cfg/Doxyfile.in
-    - sed -i "s!FAIL_ON_WARNINGS!NO!g" doxygen_cfg/Doxyfile.in
-    - sed -i "s!GENERATE_XML           = NO!GENERATE_XML           = YES!g" doxygen_cfg/Doxyfile.in
-    - doxygen doxygen_cfg/Doxyfile.in || true
-    - mv xml docs/xml
+    - sed -i "s!INPUT_FILES!${CI_PROJECT_DIR}/$DOXYGEN_INPUT!g" Doxyfile.in
+    - sed -i "s!FAIL_ON_WARNINGS!NO!g" Doxyfile.in
+    - doxygen Doxyfile.in || true
+    - mv xml ${CI_PROJECT_DIR}/docs/xml
+    - cd ${CI_PROJECT_DIR}
     - sphinx-build -b html docs sphinx_html
     - mkdir public
     - mv sphinx_html/* public
