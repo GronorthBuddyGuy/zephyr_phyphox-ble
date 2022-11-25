@@ -20,7 +20,7 @@ extensions = [ 'breathe',
                 'sphinx_rtd_theme']
 
 # CPP attributes
-cpp_id_attributes = ["__attribute__"]
+cpp_id_attributes = ["__attribute_packed__"]
 
 # Breathe Configuration
 breathe_projects = {"phyphox": "xml/"}
